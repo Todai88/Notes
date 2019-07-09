@@ -48,3 +48,34 @@ Most commonly these consequences are financial and may incur a penalty. As such 
 If there is no explicit consequence if the SLO isn't met, it's not an SLA. 
 
 SRE typically don't get involved in constructing SLAs, because they are too closely tied to business and product decisions. But, SRE gets involved in helping not triggering the consequences of missed SLOs. Additionally, SRE identifies the SLIs that are the foundation for the SLOs. 
+
+
+### Indicators in Practice
+We've established *why* choosing appropriate metrics to measure your service is 
+important. 
+But how do we go about identifying what metrics are meaningful for your service?
+
+#### What do You and your Users care about?
+All metrics you monitor shouldn't be considered SLIs, but all SLIs are based on metrics. 
+If you consider all your metrics as SLIs, it will be difficult to pay the right level of 
+attention to them all. 
+Meaning you may lose track of the more important metrics in the noise. 
+But, choosing too few metrics may leave significant behaviour unexamined.
+Having an understanding of what your users want from your service should be at the core of your SLIs. 
+Below are some examples of SLIs based on broad service categories:
+
+* **_User-facing systems_** (such as the Shakespeare front-end). Emphasises *availability*, *latency* and *throughput*. Example SLIs could be based on: 
+    * "Could we respond to the request?"
+    * "How long did it take?" 
+    * "How many request can be handled?"
+* **_Storage systems_**. Emphasises *availability*, *atency* and *durability*. So SLIs may be based on: 
+    * "How long time does it take to read or write data?"
+    * "Can we access the data on demand?"
+    * "Is the data still there when we need it?"
+* **_Big data systems_**. Emphasises *throughput* and *end-to-end latency*. In other words SLIs may be based on: 
+    * "How much data is being processed?"
+    * "How long does data ingestion take?"
+* **_All systems_** emphasise *correctness*. As such SLIs may be based on: 
+    * "Was the right answer returned?"
+    * "Was the right data retrieved?"
+    * "Was the right analysis done?"
