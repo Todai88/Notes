@@ -4,9 +4,9 @@ Uses the [Shakespeare service example](00-shakespeare-service.md) as an example 
 
 ## Table of contents:
 * [Service Level Terminology](#service-level-terminology)
-    * [Service Level Indicators (SLI)]
-    * [Service Level Objectives (SLO)]
-    * [Service Level Agreements (SLA)]
+    * [Service Level Indicators (SLI)](#service-level-indicators-sli)
+    * [Service Level Objectives (SLO)](#service-level-objectives-slo)
+    * [Service Level Agreements (SLA)](#service-level-agreements-sla)
 
 ----
 
