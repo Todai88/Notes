@@ -37,10 +37,12 @@ Yet, it may be more subtle than only having the latter SLI (request latency) in 
 If possible, publishing the SLOs to end-users may be useful. This may aid with managing users' expectations on the service, such as availability. Users are likely to develop their own expectations if an explicit SLO isn't available. 
 This dynamic can lead to both over-reliance on the service and under-reliance. 
 
-An example is the Global Chubby (Google's lock service) Planned Outage: 
+An example is the **Global Chubby (Google's lock service) Planned Outage**: 
 
-The lock service was too reliable, to the point where users would rely on it to never be down. This lead to external services being dependant on it being available (tight coupling). 
-The solution was to have planned outages. In that way, Google was able to flush out any *unreasonable dependencies*. Doing so ensured that any external services weren't too reliant on Chubby. 
+The problem Google was facing was that the lock service was far too reliable, to the point where users and services would rely on it to never be down. 
+This lead to external services being too reliant on it being available, creating tight coupling. 
+The solution was to have planned outages. In that way, Google was able to flush out any *unreasonable dependent* (external) services. 
+Doing so ensured that any external services weren't too reliant on Chubby. 
 
 #### Service Level Agreements (SLA) 
 An explicit or implicit contract with your users that includes consequences of meeting (or missing) the SLO(s) they contain.
@@ -51,6 +53,8 @@ SRE typically don't get involved in constructing SLAs, because they are too clos
 
 
 ### Indicators in Practice
+In this section "indicators" is shorthand for Service Level Indicators.
+
 We've established *why* choosing appropriate metrics to measure your service is 
 important. 
 But how do we go about identifying what metrics are meaningful for your service?
@@ -79,3 +83,17 @@ Below are some examples of SLIs based on broad service categories:
     * "Was the right answer returned?"
     * "Was the right data retrieved?"
     * "Was the right analysis done?"
+    
+#### Collecting indicators
+Many (if not most) indicators exist on the server side, such as HTTP 500 responses as a fraction of all requests.
+But, it may be worth considering also having client-libraries to scrape metrics. 
+
+**Consider this scenario**: 
+
+We are monitoring how long it takes to respond to a request from the back-end in the Shakespeare service. 
+As such, we have an indicator of how long time a response from the back-end to the front-end will take. 
+
+However, we have no way of knowing how long time it takes for the front-end to load the response. 
+What if the front-end is taking a longer than usual time to load its JavaScript? 
+Because the services are decoupled, the back-end service is unable to monitor that indicator. 
+So we may need to use the browser as a proxy to monitor the actual end-user experience.
