@@ -13,6 +13,7 @@ Uses the [Shakespeare service example](00-shakespeare-service.md) as an example 
     - [Indicators in Practice](#indicators-in-practice)
       - [What do You and your Users care about](#what-do-you-and-your-users-care-about)
       - [Collecting indicators](#collecting-indicators)
+      - [Aggregation](#aggregation)
 
 ----
 
@@ -113,3 +114,22 @@ However, we have no way of knowing how long time it takes for the front-end to l
 What if the front-end is taking a longer than usual time to load its JavaScript?
 Because the services are decoupled, the back-end service is unable to monitor that indicator.
 So we may need to use the browser as a proxy to monitor the actual end-user experience.
+
+#### Aggregation
+
+Metrics, and how they are collected, can be deceptively complex. Consider a system that receives 200 requests every odd-numbered second, but 0 requests on even-numbered seconds.
+
+Wildly different assumptions can be made depending on *how often* that metric is obtained. If the system measures the average number of requests over a minute, it will show 100 requests/second. But, if the system obtains the metric *every second*, we can see an **instantaneous** load that is twice as high as the averaged metric.
+
+Because of this, it's better to think of most metrics as distributions rather than averages. For instance, for a latency SLI, some requests will be serviced quickly. But some may take *much* longer.
+
+If the system only measures the SLI's metrics through averaging the measured requests it may obscure those long responses. [Figure 4-1](#figure_4-1) provides an example where the average request is served in 50 ms, but 5% of the request take 20 times(!).
+
+<a name="figure_4-1"/> ![Image of the latencies for a system](images/4-1_percentile_latencies.jpg "Request latencies")
+**Figure 4-1: 50th, 85th, 95th, and 99th percentile latencies for a system.**
+
+Following the [figure](#figure_4-1) it would be problematic to alert on the average service time, as it doesn't show any change over the course of the day. Whereas the tail latency (topmost line) shows *significant* change.
+
+Using percentages, like in the [figure](#figure_4-1) allows for a more detailed overview. The 99.99th percentile shows the plausible worst-case values, while the 50th percentile (median) shows the typical behaviour. The spread also allows the SRE team to deduct certain attributes of the system. For example, the higher the variance in response times is, the more affected are typical users. This is likely exacerbated at high load by queuing effects.
+
+Furthermore, studies suggest that users prefer a *slightly* slower system to one with high variance in response time. As such, some SRE teams only focus on high percentile values.
