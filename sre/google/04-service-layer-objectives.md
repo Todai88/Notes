@@ -14,6 +14,8 @@ Uses the [Shakespeare service example](00-shakespeare-service.md) as an example 
       - [What do You and your Users care about](#what-do-you-and-your-users-care-about)
       - [Collecting indicators](#collecting-indicators)
       - [Aggregation](#aggregation)
+    - [Objectives in Practice](#objectives-in-practice)
+      - [Defining Objectives](#defining-objectives)
 
 ----
 
@@ -133,3 +135,27 @@ Following the [figure](#figure_4-1) it would be problematic to alert on the aver
 Using percentages, like in the [figure](#figure_4-1) allows for a more detailed overview. The 99.99th percentile shows the plausible worst-case values, while the 50th percentile (median) shows the typical behaviour. The spread also allows the SRE team to deduct certain attributes of the system. For example, the higher the variance in response times is, the more affected are typical users. This is likely exacerbated at high load by queuing effects.
 
 Furthermore, studies suggest that users prefer a *slightly* slower system to one with high variance in response time. As such, some SRE teams only focus on high percentile values.
+
+### Objectives in Practice
+
+Before defining objectives, determine what the system's end-users care about. It might be easier to consider their use-cases, and what metrics demonstrate a healthy state. In other words, it may be easier to work backwards to approximate objectives (SLOs) before identifying its' indicators (SLIs).
+
+#### Defining Objectives
+
+SLOs should specify how they're measured and their valid condition(s). An example SLO may be (the latter says the same as the former, but clearer):
+
+- 99% (averaged over 1 minute) of Get RPC calls will complete in less than 100 ms (measured across all the backend servers).
+- 99% of Get RPC calls will complete in less than 100 ms.
+
+Further, we can specify multiple SLO targets:
+
+- 90% of Get RPC calls will complete in less than 1 ms.
+- 99% of Get RPC calls will complete in less than 10 ms.
+- 99.9% of Get RPC calls will complete in less than 100 ms.
+
+Consider a system where users care about throughput, and which has an interactive client that cares about latency. In that case it may be appropriate to define separate objectives for each workload:
+
+- 95% of throughput clients’ Set RPC calls will complete in < 1 s.
+- 99% of latency clients’ Set RPC calls with payloads < 1 kB will complete in < 10 ms.
+
+Finally, it's undesirable to insist that SLOs will be met 100%. This may reduce innovation and may make development more expensive. Instead, use an error budget - a rate at which the SLOs can be missed. Track this on a daily or weekly basis, for the team and higher management, if they want regular assessments. Basically, the error budget functions a SLO for meeting other SLOs.
