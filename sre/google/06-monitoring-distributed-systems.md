@@ -55,3 +55,23 @@ Paging (an automated call to an employee due to an alert), is quite an expensive
 In comparison an effective system should have good signal and very low noise. 
 
 ## Setting Reasonable Expectations for Monitoring
+
+Google suggests to have clear and simple alert rules.
+Further, SRE teams should skip complex dependency hierarchies,
+where possible. An example of a complex dependency hierarchy for an
+alert rule could be "If I know the database is slow,
+alert for a slow database; otherwise, alert for the website being generally slow". 
+
+As such, it's important that monitoring systems and their alert rules
+are simple and comprehensible for everyone on the team.
+Especially the critical path and its related pages:
+
+1. Alert raised from production
+2. Page to human
+3. Basic triage (fix shallow issues)
+4. Deep debugging
+
+In conclusion, to keep signal high and noise low,
+the elements of the system that direct to a pager need to be simple and robust.
+Additionally, rules that generate alerts for humans should be kept simple
+and represent *clear* failure.
