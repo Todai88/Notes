@@ -5,7 +5,7 @@ and how to deal with issues that aren't serious enough to trigger a page.
 
 ## Table of contents
 - [Definitions](#definitions)
-
+- [Why Monitor?](#why-monitor?)
 ## Definitions
 
 - *Monitoring*
@@ -30,3 +30,28 @@ and how to deal with issues that aren't serious enough to trigger a page.
 
 > Any change to a service's running software or its configuration.
 
+## Why Monitor?
+
+- *Analysing long-term trends*
+> How big is the system's database and how fast is it growing?
+
+- *Comparing over time or experiment groups*
+> Is my site slower than it was last week?
+
+- *Alerting*
+> Something is broken and needs to be fixed (right now!)
+
+- *Building dashboards*
+> Should answer basic questions about the service and (normally) include a form of the 
+[Four Golden Signals](#four-golden-signals).
+
+- *Conducting ad hoc retrospective analysis*
+> If the system's latency suddenly spikes; what else happened around the same time?
+
+In conclusion, monitoring and alerting enables a system to tell us when it's broken, or when it's about to break. When a system can't recover from this, we want a human to investigate the alert. This includes mitigating the error and determining the root cause(s).
+
+Paging (an automated call to an employee due to an alert), is quite an expensive operation, both for the employee and employer. If the employee is working, it will interrupt their workflow. If the employe is at home, it will interrupt their personal time, possibly even their sleep. Furthermore, when pages occur too frequently, there is an increased risk that they carelessly are skimmed over. There is also an increased risk that a *real* page is ignored if pages are too noisy.
+
+In comparison an effective system should have good signal and very low noise. 
+
+## Setting Reasonable Expectations for Monitoring
