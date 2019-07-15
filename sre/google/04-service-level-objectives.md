@@ -1,11 +1,10 @@
-# Service Layer Objectives
+# Service Level Objectives
 
 Uses the [Shakespeare service example](00-shakespeare-service.md) as an example service.
 
 ## Table of contents
 
-- [Service Layer Objectives](#service-layer-objectives)
-  - [Table of contents](#table-of-contents)
+- [Service Level Objectives](#service-layer-objectives)
     - [Service Level Terminology](#service-level-terminology)
       - [Service Level Indicators (SLI)](#service-level-indicators-sli)
       - [Service Level Objectives (SLO)](#service-level-objectives-slo)
