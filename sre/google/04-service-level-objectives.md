@@ -28,22 +28,24 @@ A defined quantitative measure of the level of a provided service.
 
 Examples:
 
-- request latency; how long time it takes to return a response to a request.
+- request latency; how much time it takes for returning a response to a request.
 - error rate; a percentile or fraction of received requests.
 - system throughput; measured as request per second.
-- availability; the fraction of the time that a service is usable.
+- availability; the fraction of time in which a service is usable.
 - yield; the fraction of well-formed and successful requests.
 - durability; the likelihood of data-retention over a long period of time. Particularly important for storage systems.
 
-The measurements are often aggregated. Meaning it's collected over a period of time. Depending on the type of the measurement, it is then turned into rates, averages or percentiles.
+The measurements are often aggregated. Meaning it's collected over a period of time. Depending on the type of measurement, it is then turned into rates, averages or percentiles.
 
 #### Service Level Objectives (SLO)
 
-A target value or range of values for a service level, measured by an SLI. e.g: *SLI*  ≤ *target* or *lower bound* ≤ *SLI* ≤ *upper bound*.
+A target value or range of values for a service level, measured by an SLI. e.g:
+*SLI*  ≤ *target*
+*lower bound* ≤ *SLI* ≤ *upper bound*
 
 In some cases it is difficult to define a SLO. In particular you might not always be able to define its value. For instance, to measure incoming HTTP requests from the outside world to your service, you may use the queries per seconds (QPS) metrics.
 This might seem like a good idea. But you may realise that it can't reliably be measured due to the QPS being dependant on your users' desire to use your service.
-But, there are cases where you can add a value to a SLO. For instance and SLO with a value could be "the Shakespeare service should have an average *request latency* lower than 100 ms".  
+However, there are cases where you can add a value to a SLO. For instance a SLO with a value could be "the Shakespeare service should have an average *request latency* lower than 100 ms".
 This SLO may motivate your team to write the front-end with low-latency behaviour. Or it may motivate you to purchase low-latency equipment.
 
 Yet, it may be more subtle than only having the latter SLI (request latency) in the SLO. The QPS and request latency may be connected behind the scenes. A higher QPS or throughput would likely increase the request latency. Besides, it's common for services to have a performance cliff beyond some load threshold.
@@ -62,23 +64,21 @@ Doing so ensured that any external services weren't too reliant on Chubby.
 
 An explicit or implicit contract with your users that includes consequences of meeting (or missing) the SLO(s) they contain.
 Most commonly these consequences are financial and may incur a penalty. As such it's easy to distinguish between an SLA and SLO.
-If there is no explicit consequence if the SLO isn't met, it's not an SLA.
+When there is no explicit consequence if the SLO isn't met, it's not an SLA.
 
-SRE typically don't get involved in constructing SLAs, because they are too closely tied to business and product decisions. But, SRE gets involved in helping not triggering the consequences of missed SLOs. Additionally, SRE identifies the SLIs that are the foundation for the SLOs.
+SRE typically don't get involved in constructing SLAs, because they are too closely tied to Business and Product decisions. They do get involved in helping not triggering the consequences of missed SLOs. Additionally, SRE identify the SLIs that are the foundation for the SLOs.
 
 ### Indicators in Practice
 
 In this section "indicators" is shorthand for Service Level Indicators.
 
-We've established *why* choosing appropriate metrics to measure your service is
-important.
+We've established *why* choosing appropriate metrics to measure your service is important.
 But how do we go about identifying what metrics are meaningful for your service?
 
 #### What do You and your Users care about
 
 All metrics you monitor shouldn't be considered SLIs, but all SLIs are based on metrics.
-If you consider all your metrics as SLIs, it will be difficult to pay the right level of
-attention to them all.
+If you consider all your metrics as SLIs, it will be difficult to pay the right level of attention to them all.
 Meaning you may lose track of the more important metrics in the noise.
 But, choosing too few metrics may leave significant behaviour unexamined.
 Having an understanding of what your users want from your service should be at the core of your SLIs.
@@ -87,10 +87,10 @@ Below are some examples of SLIs based on broad service categories:
 - **_User-facing systems_** (such as the Shakespeare front-end). Emphasises *availability*, *latency* and *throughput*. Example SLIs could be based on:
   - "Could we respond to the request?"
   - "How long did it take?"
-  - "How many request can be handled?"
+  - "How many requests can be handled?"
   
-- **_Storage systems_**. Emphasises *availability*, *atency* and *durability*. So SLIs may be based on:
-  - "How long time does it take to read or write data?"
+- **_Storage systems_**. Emphasises *availability*, *latency* and *durability*. So SLIs may be based on:
+  - "How long does it take to read or write data?"
   - "Can we access the data on demand?"
   - "Is the data still there when we need it?"
   
@@ -111,12 +111,12 @@ But, it may be worth considering also having client-libraries to scrape metrics.
 **Consider this scenario**:
 
 We are monitoring how long it takes to respond to a request from the back-end in the Shakespeare service.
-As such, we have an indicator of how long time a response from the back-end to the front-end will take.
+As such, we have an indicator on how much time a response from the back-end to the front-end will take.
 
-However, we have no way of knowing how long time it takes for the front-end to load the response.
+However, we have no way of knowing how long it takes for the front-end to load the response.
 What if the front-end is taking a longer than usual time to load its JavaScript?
 Because the services are decoupled, the back-end service is unable to monitor that indicator.
-So we may need to use the browser as a proxy to monitor the actual end-user experience.
+So we may need to use the browser as a proxy, to monitor the actual end-user experience.
 
 #### Aggregation
 
@@ -164,17 +164,17 @@ Finally, it's undesirable to insist that SLOs will be met 100%. This may reduce 
 
 #### Choosing Targets
 
-As established, the activity of choosing targets is not a purely technical activity. It may, for instance,  require establishing use-cases. Further, objectives and/or targets may have business implications that need to be reflected in policy decisions.
+As established, the activity of choosing targets is not a purely technical activity. It may, for instance, require establishing use-cases. Further, objectives and/or targets may have business implications that need to be reflected in policy decisions.
 As such, SRE should be part of this discussion, but should not be making all the decisions. Some suggestions for a more productive discussion could be:
 
 - *Don't pick a target based on current performance*
-> Adopting values without reflection, may impede any further innovation and development. 
+> Adopting values without reflection, may impede any further innovation and development.
 - *Keep it simple*
 > Complicated aggregation in SLIs can obscure changes to system performance, and are difficult to reason about.
 - *Avoid absolutes*
 > Try to not use words like "infinitely" or "always" to describe a system's target. Using absolutes will create unrealistic requirements that may make the system expensive to operate.
 - *Have as few SLOs as possible*
-> Decide on a few SLOs that provide good coverage of the system's attributes. A good rule of thumb is "if you can't win a conversation about priorities by quoting a particular SLO, it's not worth having that SLO". 
+> Decide on a few SLOs that provide good coverage of the system's attributes. A good rule of thumb is "if you can't win a conversation about priorities by quoting a particular SLO, it's not worth having that SLO".
 - *Perfection can wait*
 > Refine your SLOs' definitions and targets over time. Start with loose targets that you can tighten, instead of starting with overly strict targets.
 
@@ -187,19 +187,17 @@ A common pattern to manage a system using SLI/SLOs is:
 1. Monitor the system's SLIs.
 2. Compare the SLIs to the SLOs and decide on action(s).
 3. If necessary, figure out *what* action is needed to meet the target.
-4. Perform action
+4. Perform action.
 
 #### SLOs Set Expectations
 
 As mentioned earlier, publishing SLOs sets expectations for your system's behaviour.
 To set realistic expectations, consider using one or both of the following tactics:
 - *Keep a safety margin*
-> Having a tighter *internal* SLO than the advertised SLO gives you room to respond to problems before they become visible to your users. This buffer also makes it possible to (re)implement features that trade an SLO's target attribute for other attributes. For example, an internal latency SLO may be increased (but still under the advertised SLO!) to accommodate ease of maintenance. 
+> Having a tighter *internal* SLO than the advertised SLO gives you room to respond to problems before they become visible to your users. This buffer also makes it possible to (re)implement features that trade an SLO's target attribute for other attributes. For example, an internal latency SLO may be increased (but still under the advertised SLO!) to accommodate ease of maintenance.
 - *Don't overachieve*
-> If your service's actual performance is much better than its stated SLO, users will rely on its current performance. To avoid this, it may be worth throttling requests or designing the system to not be faster under light load.
+> If your service's actual performance is much better than its stated SLO, users will rely on its current performance. To avoid this, it may be worth throttling requests or designing the system not to be faster under light load.
 
-Understanding how well SLOs are met will help help prioritise your work in 
-making the system faster, more available or more resilient.
-If SLOs are being met, other work such as tech debt or feature work should 
-be prioritised.
+Understanding how well SLOs are met will help help prioritise your work in making the system faster, more available or more resilient.
+If SLOs are being met, other work such as tech debt or feature work should be prioritised.
 
