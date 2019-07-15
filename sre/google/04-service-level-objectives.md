@@ -4,20 +4,22 @@ Uses the [Shakespeare service example](00-shakespeare-service.md) as an example 
 
 ## Table of contents
 
-- [Service Level Objectives](#service-layer-objectives)
-    - [Service Level Terminology](#service-level-terminology)
-      - [Service Level Indicators (SLI)](#service-level-indicators-sli)
-      - [Service Level Objectives (SLO)](#service-level-objectives-slo)
-      - [Service Level Agreements (SLA)](#service-level-agreements-sla)
-    - [Indicators in Practice](#indicators-in-practice)
-      - [What do You and your Users care about](#what-do-you-and-your-users-care-about)
-      - [Collecting indicators](#collecting-indicators)
-      - [Aggregation](#aggregation)
-    - [Objectives in Practice](#objectives-in-practice)
-      - [Defining Objectives](#defining-objectives)
-      - [Choosing Targets](#choosing-targets)
-      - [Control Measures](#control-measures)
-      - [SLOs Set Expectations](#slos-set-expectations)
+- [Service Level Objectives](#Service-Level-Objectives)
+  - [Table of contents](#Table-of-contents)
+    - [Service Level Terminology](#Service-Level-Terminology)
+      - [Service Level Indicators (SLI)](#Service-Level-Indicators-SLI)
+      - [Service Level Objectives (SLO)](#Service-Level-Objectives-SLO)
+      - [Service Level Agreements (SLA)](#Service-Level-Agreements-SLA)
+    - [Indicators in Practice](#Indicators-in-Practice)
+      - [What do You and your Users care about](#What-do-You-and-your-Users-care-about)
+      - [Collecting indicators](#Collecting-indicators)
+      - [Aggregation](#Aggregation)
+    - [Objectives in Practice](#Objectives-in-Practice)
+      - [Defining Objectives](#Defining-Objectives)
+      - [Choosing Targets](#Choosing-Targets)
+      - [Control Measures](#Control-Measures)
+      - [SLOs Set Expectations](#SLOs-Set-Expectations)
+  
 ----
 
 ### Service Level Terminology
@@ -161,22 +163,26 @@ Consider a system where users care about throughput, and which has an interactiv
 
 Finally, it's undesirable to insist that SLOs will be met 100%. This may reduce innovation and may make development more expensive. Instead, use an error budget - a rate at which the SLOs can be missed. Track this on a daily or weekly basis, for the team and higher management, if they want regular assessments. Basically, the error budget functions a SLO for meeting other SLOs.
 
-
 #### Choosing Targets
 
 As established, the activity of choosing targets is not a purely technical activity. It may, for instance, require establishing use-cases. Further, objectives and/or targets may have business implications that need to be reflected in policy decisions.
 As such, SRE should be part of this discussion, but should not be making all the decisions. Some suggestions for a more productive discussion could be:
 
 - *Don't pick a target based on current performance*
-> Adopting values without reflection, may impede any further innovation and development.
+
+  Adopting values without reflection, may impede any further innovation and development.
 - *Keep it simple*
-> Complicated aggregation in SLIs can obscure changes to system performance, and are difficult to reason about.
+
+  Complicated aggregation in SLIs can obscure changes to system performance, and are difficult to reason about.
 - *Avoid absolutes*
-> Try to not use words like "infinitely" or "always" to describe a system's target. Using absolutes will create unrealistic requirements that may make the system expensive to operate.
+
+  Try to not use words like "infinitely" or "always" to describe a system's target. Using absolutes will create unrealistic requirements that may make the system expensive to operate.
 - *Have as few SLOs as possible*
-> Decide on a few SLOs that provide good coverage of the system's attributes. A good rule of thumb is "if you can't win a conversation about priorities by quoting a particular SLO, it's not worth having that SLO".
+
+  Decide on a few SLOs that provide good coverage of the system's attributes. A good rule of thumb is "if you can't win a conversation about priorities by quoting a particular SLO, it's not worth having that SLO".
 - *Perfection can wait*
-> Refine your SLOs' definitions and targets over time. Start with loose targets that you can tighten, instead of starting with overly strict targets.
+
+  Refine your SLOs' definitions and targets over time. Start with loose targets that you can tighten, instead of starting with overly strict targets.
 
 **In conclusion, SLOs should be at the core when prioritising work, because they reflect what users care about.**
 
@@ -193,11 +199,13 @@ A common pattern to manage a system using SLI/SLOs is:
 
 As mentioned earlier, publishing SLOs sets expectations for your system's behaviour.
 To set realistic expectations, consider using one or both of the following tactics:
+
 - *Keep a safety margin*
-> Having a tighter *internal* SLO than the advertised SLO gives you room to respond to problems before they become visible to your users. This buffer also makes it possible to (re)implement features that trade an SLO's target attribute for other attributes. For example, an internal latency SLO may be increased (but still under the advertised SLO!) to accommodate ease of maintenance.
+
+  Having a tighter *internal* SLO than the advertised SLO gives you room to respond to problems before they become visible to your users. This buffer also makes it possible to (re)implement features that trade an SLO's target attribute for other attributes. For example, an internal latency SLO may be increased (but still under the advertised SLO!) to accommodate ease of maintenance.
 - *Don't overachieve*
-> If your service's actual performance is much better than its stated SLO, users will rely on its current performance. To avoid this, it may be worth throttling requests or designing the system not to be faster under light load.
+
+  If your service's actual performance is much better than its stated SLO, users will rely on its current performance. To avoid this, it may be worth throttling requests or designing the system not to be faster under light load.
 
 Understanding how well SLOs are met will help help prioritise your work in making the system faster, more available or more resilient.
 If SLOs are being met, other work such as tech debt or feature work should be prioritised.
-
