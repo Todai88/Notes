@@ -159,3 +159,22 @@ Consider a system where users care about throughput, and which has an interactiv
 - 99% of latency clients’ Set RPC calls with payloads < 1 kB will complete in < 10 ms.
 
 Finally, it's undesirable to insist that SLOs will be met 100%. This may reduce innovation and may make development more expensive. Instead, use an error budget - a rate at which the SLOs can be missed. Track this on a daily or weekly basis, for the team and higher management, if they want regular assessments. Basically, the error budget functions a SLO for meeting other SLOs.
+
+
+#### Choosing Targets
+
+As established, the activity of choosing targets is not a purely technical activity. It may, for instance,  require establishing use-cases. Further, objectives and/or targets may have business implications that need to be reflected in policy decisions.
+As such, SRE should be part of this discussion, but should not be making all the decisions. Some suggestions for a more productive discussion could be:
+
+- *Don't pick a target based on current performance*
+> Adopting values without reflection, may impede any further innovation and development. 
+- *Keep it simple*
+> Complicated aggregation in SLIs can obscure changes to system performance, and are difficult to reason about.
+- *Avoid absolutes*
+> Try to not use words like "infinitely" or "always" to describe a system's target. Using absolutes will create unrealistic requirements that may make the system expensive to operate.
+- *Have as few SLOs as possible*
+> Decide on a few SLOs that provide good coverage of the system's attributes. A good rule of thumb is "if you can't win a conversation about priorities by quoting a particular SLO, it's not worth having that SLO". 
+- *Perfection can wait*
+> Refine your SLOs' definitions and targets over time. Start with loose targets that you can tighten, instead of starting with overly strict targets.
+
+**In conclusion, SLOs should be at the core when prioritising work, because they reflect what users care about.**
