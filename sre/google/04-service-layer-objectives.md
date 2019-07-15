@@ -16,7 +16,9 @@ Uses the [Shakespeare service example](00-shakespeare-service.md) as an example 
       - [Aggregation](#aggregation)
     - [Objectives in Practice](#objectives-in-practice)
       - [Defining Objectives](#defining-objectives)
-
+      - [Choosing Targets](#choosing-targets)
+      - [Control Measures](#control-measures)
+      - [SLOs Set Expectations](#slos-set-expectations)
 ----
 
 ### Service Level Terminology
@@ -178,3 +180,27 @@ As such, SRE should be part of this discussion, but should not be making all the
 > Refine your SLOs' definitions and targets over time. Start with loose targets that you can tighten, instead of starting with overly strict targets.
 
 **In conclusion, SLOs should be at the core when prioritising work, because they reflect what users care about.**
+
+#### Control Measures
+
+A common pattern to manage a system using SLI/SLOs is:
+
+1. Monitor the system's SLIs.
+2. Compare the SLIs to the SLOs and decide on action(s).
+3. If necessary, figure out *what* action is needed to meet the target.
+4. Perform action
+
+#### SLOs Set Expectations
+
+As mentioned earlier, publishing SLOs sets expectations for your system's behaviour.
+To set realistic expectations, consider using one or both of the following tactics:
+- *Keep a safety margin*
+> Having a tighter *internal* SLO than the advertised SLO gives you room to respond to problems before they become visible to your users. This buffer also makes it possible to (re)implement features that trade an SLO's target attribute for other attributes. For example, an internal latency SLO may be increased (but still under the advertised SLO!) to accommodate ease of maintenance. 
+- *Don't overachieve*
+> If your service's actual performance is much better than its stated SLO, users will rely on its current performance. To avoid this, it may be worth throttling requests or designing the system to not be faster under light load.
+
+Understanding how well SLOs are met will help help prioritise your work in 
+making the system faster, more available or more resilient.
+If SLOs are being met, other work such as tech debt or feature work should 
+be prioritised.
+
