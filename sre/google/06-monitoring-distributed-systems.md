@@ -10,6 +10,7 @@ and how to deal with issues that aren't serious enough to trigger a page.
 - [Setting Reasonable Expectations for Monitoring](#setting-reasonable-expectations-for-monitoring)
 - [System Versus Causes](#system-versus-causes)
 - [Black-Box Versus White-Box Monitoring](#black-box-versus-white-box-monitoring)
+- [The Four Golden Signals](#the-four-golden-signals)
 
 ## Definitions
 
@@ -135,3 +136,56 @@ rather than imminent ones. So it's a great candidate for paging (interrupting) a
 Keeping these benefits in mind may decrease the sound that your alerting produces.
 
 ## The Four Golden Signals
+
+- **Latency**
+  
+  The time it takes to service a request. 
+  
+  Note that monitoring should distinguish between latency of *successful* and *failed*
+requests. The collected metrics may be misleading if that distinction is not made. 
+For instance, a failed request (500) due to a lost database connection may be served 
+very quickly, which would skew the metrics.  
+  
+- **Traffic**
+
+  This metric may be different depending on the type of system that is being monitored.
+For instance, if it's a web service, the SRE team would mainly be interested in HTTP 
+requests per second. The request may be split into categories depending on the nature of 
+the request (e.g., static versus dynamic content). 
+
+- **Errors**
+
+  The rate of requests that fail. 
+  
+  This may either be *explicitly* due to an
+internal server error, or *implicitly* due to serving a request to the user,
+but with incorrect content.
+Further, it is possible to consider requests as failures if they break policy
+(e.g., "If you committed to one-second response times, any request over
+one second is an error").
+  
+  Depending on the type of failure, monitoring different layers may be necessary.
+For instance, monitoring a load-balancer may catch all HTTP 500s.
+But end-to-end monitoring tests may be the only way to detect that
+wrong content is being served.
+
+- **Saturation**
+
+  How "full" your service is.
+  
+  A measure of your *system fraction*, emphasising the resources that are most
+constrained by your system. For instance, memory is the system's main concern,
+the SRE team should focus on measuring the memory.
+Consider having a utilisation target, as most systems degrade
+their performance before reaching 100% *saturation*.
+  
+  In complex systems, *saturation* can be supplemented with *higher-level
+load measurements*. Meaning, can the service handle double the traffic,
+handle only 10% more or can it only *reasonably* handle less than it
+currently receives?
+  
+Finally, a service can be considered *decently* covered by monitoring
+if you are measuring the four golden signals. Further, as a rule of thumb,
+if a signal fails (or in the case of saturation, *nearly* is failing)
+the system should page a human. This may help with reducing a system's overall noise.
+ 
