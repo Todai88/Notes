@@ -7,6 +7,9 @@ and how to deal with issues that aren't serious enough to trigger a page.
 
 - [Definitions](#definitions)
 - [Why Monitor?](#why-monitor?)
+- [Setting Reasonable Expectations for Monitoring](#setting-reasonable-expectations-for-monitoring)
+- [System Versus Causes](#system-versus-causes)
+- [Black-Box Versus White-Box Monitoring](#black-box-versus-white-box-monitoring)
 
 ## Definitions
 
@@ -50,7 +53,7 @@ Used interchangeably to state a single instance of a running kernel. There may b
   Something is broken and needs to be fixed (right now!)
 - *Building dashboards*
 
-  Should answer basic questions about the service and (normally) include a form of the [Four Golden Signals](#four-golden-signals).
+  Should answer basic questions about the service and (normally) include a form of [the Four Golden Signals](#the-four-golden-signals).
 - *Conducting ad hoc retrospective analysis*
 
   If the system's latency suddenly spikes; what else happened around the same time?
@@ -82,3 +85,53 @@ In conclusion, to keep signal high and noise low,
 the elements of the system that direct to a pager need to be simple and robust.
 Additionally, rules that generate alerts for humans should be kept simple
 and represent *clear* failure.
+
+## System Versus Causes
+
+Monitoring a system should address two questions: "what's broken?", and "why?".
+
+"What's broken?" indicates the symptom; "why" indicates the cause. 
+[Table 6-1](#table_6-1) lists some (hypothetical) symptoms and causes.
+    
+*Table 6-1: Example symptoms and causes*
+  
+| Symptoms (What's broken?)                                      | Cause  (Why?)                                                        |
+|-----------------------------------------------|----------------------------------------------------------------|
+| I'm serving HTTP 500s or 404s                 | Database servers are refusing connections                      |
+| My responses are slow                         | CPUs are overloaded                                            |
+| Users in Antarctica aren't receiving cat GIFs | The Content Distribution Network hates scientists and felines. |
+
+<a name="table_6-1"/>
+
+The distinction between "what" and "why" is important for writing monitoring with maximum signal and minimum noise.
+
+## Black-Box Versus White-Box Monitoring
+
+Black-box monitoring is symptom-oriented and represents *active* problems. 
+For instance, it may detect that "The system isn't working, *right now*".
+
+White-box monitoring, on the other hand, count on the ability to inspect the 
+system's internals.
+Examples of such internals are HTTP endpoints or logs.
+So, one of white-box monitoring's purposes is to detect imminent problems,
+such as failures masked by retries. 
+
+Note that in a multi-layered system, one teams's symptom can be another team's cause.
+For instance, if database reads are slow, it would be a symptom for the database SRE
+who detects it.
+But,  for a frontend SRE observing a slow website, that symptom would be a cause.
+As such, white-box monitoring can sometimes be symptom-oriented,
+and sometimes cause-oriented. Depending on how informative your white-box is. 
+
+In conclusion, black-box and white-box monitoring each serve their own purposes.
+White-box monitoring is essential for debugging a system.
+For instance, if servers are slow on database-heavy requests,
+you need to know both *how fast servers perceive the database to be*, and
+*how fast the database believes itself to be*.
+Otherwise, it's difficult to distinguish if the cause is a slow database,
+or a network problem between your components.
+The benefit of black-box monitoring is that it only is aware of if ongoing failures,
+rather than imminent ones. So it's a great candidate for paging (interrupting) a human. 
+Keeping these benefits in mind may decrease the sound that your alerting produces.
+
+## The Four Golden Signals
