@@ -30,7 +30,7 @@ A defined quantitative measure of the level of a provided service.
 
 Examples:
 
-- request latency; how much time it takes for returning a response to a request.
+- request latency; how long time does it take to return a response to a request.
 - error rate; a percentile or fraction of received requests.
 - system throughput; measured as request per second.
 - availability; the fraction of time in which a service is usable.
@@ -113,7 +113,7 @@ But, it may be worth considering also having client-libraries to scrape metrics.
 **Consider this scenario**:
 
 We are monitoring how long it takes to respond to a request from the back-end in the Shakespeare service.
-As such, we have an indicator on how much time a response from the back-end to the front-end will take.
+As such, we have an indicator of how long time a response from the back-end to the front-end will take.
 
 However, we have no way of knowing how long it takes for the front-end to load the response.
 What if the front-end is taking a longer than usual time to load its JavaScript?
@@ -137,7 +137,7 @@ Following the [figure](#figure_4-1) it would be problematic to alert on the aver
 
 Using percentages, like in the [figure](#figure_4-1) allows for a more detailed overview. The 99.99th percentile shows the plausible worst-case values, while the 50th percentile (median) shows the typical behaviour. The spread also allows the SRE team to deduct certain attributes of the system. For example, the higher the variance in response times is, the more affected are typical users. This is likely exacerbated at high load by queuing effects.
 
-Furthermore, studies suggest that users prefer a *slightly* slower system to one with high variance in response time. As such, some SRE teams only focus on high percentile values.
+Furthermore, studies suggest that users prefer a *slightly* slower system to a faster one with high variance in response time. As such, some SRE teams only focus on high percentile values.
 
 ### Objectives in Practice
 
